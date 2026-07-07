@@ -18,18 +18,21 @@ type ErrorResponse = {
   success: false;
   message: string;
   code?: string;
+  detail?: string;
 };
 
 function buildErrorResponse(
   message: string,
   status: number,
   code?: string,
+  detail?: string,
 ): NextResponse<ErrorResponse> {
   return NextResponse.json(
     {
       success: false,
       message,
       ...(code ? { code } : {}),
+      ...(detail ? { detail } : {}),
     },
     { status },
   );
@@ -77,6 +80,7 @@ export async function POST(req: Request) {
         "AI service is not configured",
         503,
         error.code,
+        error.message,
       );
     }
 
