@@ -1,0 +1,72 @@
+{
+  "locales": {
+    "en": "EN",
+    "zh": "中文"
+  },
+  "metadata": {
+    "homeTitle": "Project Blue",
+    "homeDescription": "Your decision intelligence for life's important choices.",
+    "decisionTitle": "Decision Analysis — Project Blue",
+    "decisionDescription": "Analyze your decision with structured clarity."
+  },
+  "brand": {
+    "name": "Project Blue",
+    "title": "Project Blue"
+  },
+  "landing": {
+    "sloganThink": "Think Clearly",
+    "sloganAct": "Act Confidently",
+    "description": "Your decision intelligence for life's important choices.",
+    "inputPlaceholder": "What are you trying to decide today?",
+    "startAnalysis": "Start Analysis",
+    "popularDecisions": "Popular decisions",
+    "howItWorks": "How it works",
+    "howItWorksTitle": "From uncertainty to clarity",
+    "footerTagline": "Decision intelligence, thoughtfully built.",
+    "popular": {
+      "buyACar": "Buy a Car",
+      "career": "Career",
+      "finance": "Finance",
+      "relationship": "Relationship",
+      "travel": "Travel",
+      "startup": "Startup"
+    },
+    "steps": {
+      "step1Title": "Describe your decision",
+      "step1Description": "Share what you're weighing and what matters most to you.",
+      "step2Title": "Receive structured analysis",
+      "step2Description": "AI breaks down options, risks, and key variables clearly.",
+      "step3Title": "Compare trade-offs",
+      "step3Description": "See side-by-side insights so nothing important is missed.",
+      "step4Title": "Decide with confidence",
+      "step4Description": "Move forward with clarity, not guesswork."
+    }
+  },
+  "decision": {
+    "decisionInput": "Decision Input",
+    "inputPlaceholder": "Describe your decision...",
+    "analyzeDecision": "Analyze Decision",
+    "analyzing": "Analyzing...",
+    "analysisTimeline": "Analysis Timeline",
+    "timeline": {
+      "goal": "Goal",
+      "options": "Options",
+      "risks": "Risks",
+      "recommendation": "Recommendation",
+      "confidence": "Confidence"
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "parseFailed": "Unable to read the analysis response. Please try again.",
+    "aiRequestFailed": "AI request failed"
+  },
+  "models": {
+    "selectorLabel": "AI model",
+    "deepseekV3": "DeepSeek V3",
+    "gpt5": "GPT-5",
+    "claudeSonnet": "Claude Sonnet",
+    "gemini": "Gemini",
+    "qwen": "Qwen"
+  }
+}

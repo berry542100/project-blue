@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,18 +15,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Project Blue",
-  description: "AI Decision Engine",
+  description: "Your decision intelligence for life's important choices.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en" className="dark">
+    <html lang={locale} className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-zinc-950 font-sans antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-[#050816] font-sans antialiased`}
       >
         {children}
       </body>

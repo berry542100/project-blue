@@ -1,0 +1,72 @@
+{
+  "locales": {
+    "en": "EN",
+    "zh": "中文"
+  },
+  "metadata": {
+    "homeTitle": "Project Blue",
+    "homeDescription": "为您人生中重要的选择提供决策智能。",
+    "decisionTitle": "决策分析 — Project Blue",
+    "decisionDescription": "以结构化方式分析您的决策。"
+  },
+  "brand": {
+    "name": "Project Blue",
+    "title": "蓝图计划"
+  },
+  "landing": {
+    "sloganThink": "清晰思考",
+    "sloganAct": "自信行动",
+    "description": "为您人生中重要的选择提供决策智能。",
+    "inputPlaceholder": "今天您想做出什么决定？",
+    "startAnalysis": "开始分析",
+    "popularDecisions": "热门决策",
+    "howItWorks": "工作原理",
+    "howItWorksTitle": "从迷茫到清晰",
+    "footerTagline": "精心打造的决策智能。",
+    "popular": {
+      "buyACar": "购车",
+      "career": "职业",
+      "finance": "财务",
+      "relationship": "感情",
+      "travel": "旅行",
+      "startup": "创业"
+    },
+    "steps": {
+      "step1Title": "描述您的决策",
+      "step1Description": "分享您正在权衡的内容以及最重要的因素。",
+      "step2Title": "获取结构化分析",
+      "step2Description": "AI 清晰拆解选项、风险和关键变量。",
+      "step3Title": "比较权衡",
+      "step3Description": "并排查看洞察，确保不遗漏重要信息。",
+      "step4Title": "自信决策",
+      "step4Description": "以清晰的思路前进，而非凭猜测。"
+    }
+  },
+  "decision": {
+    "decisionInput": "决策输入",
+    "inputPlaceholder": "描述您的决策...",
+    "analyzeDecision": "分析决策",
+    "analyzing": "分析中...",
+    "analysisTimeline": "分析时间线",
+    "timeline": {
+      "goal": "目标",
+      "options": "选项",
+      "risks": "风险",
+      "recommendation": "建议",
+      "confidence": "置信度"
+    }
+  },
+  "errors": {
+    "generic": "出了点问题，请重试。",
+    "parseFailed": "无法读取分析结果，请重试。",
+    "aiRequestFailed": "AI 请求失败"
+  },
+  "models": {
+    "selectorLabel": "AI 模型",
+    "deepseekV3": "DeepSeek V3",
+    "gpt5": "GPT-5",
+    "claudeSonnet": "Claude Sonnet",
+    "gemini": "Gemini",
+    "qwen": "Qwen"
+  }
+}
