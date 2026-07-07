@@ -1,8 +1,11 @@
+import { AIUpstreamError, readResponseErrorBody } from "../errors";
 import type { AIProvider, ChatMessage, ProviderCredentials } from "../types";
 
 type OpenAICompatibleResponse = {
   choices: Array<{ message: { content: string } }>;
 };
+
+const PROVIDER_NAME = "openai-compatible";
 
 export const openAICompatibleProvider: AIProvider = {
   async complete(
@@ -10,7 +13,9 @@ export const openAICompatibleProvider: AIProvider = {
     apiModelId: string,
     credentials: Required<ProviderCredentials>,
   ) {
-    const response = await fetch(`${credentials.baseUrl}/chat/completions`, {
+    const url = `${credentials.baseUrl}/chat/completions`;
+
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +30,13 @@ export const openAICompatibleProvider: AIProvider = {
     });
 
     if (!response.ok) {
-      throw new Error("AI request failed");
+      const responseBody = await readResponseErrorBody(response);
+      throw new AIUpstreamError(
+        `Upstream ${PROVIDER_NAME} request failed with status ${response.status}`,
+        PROVIDER_NAME,
+        response.status,
+        responseBody,
+      );
     }
 
     const data = (await response.json()) as OpenAICompatibleResponse;

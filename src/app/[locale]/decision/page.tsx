@@ -15,7 +15,7 @@ type DecisionResult = {
 
 type ApiResponse =
   | { success: true; result: string | DecisionResult }
-  | { success: false; message: string };
+  | { success: false; message: string; code?: string };
 
 const timelineKeys = [
   "goal",
@@ -220,11 +220,13 @@ export default function DecisionPage() {
 
       if (!response.ok || !data.success) {
         const message =
-          !data.success && data.message === "AI request failed"
-            ? tErrors("aiRequestFailed")
-            : !data.success && data.message === "Invalid AI response format"
-              ? tErrors("parseFailed")
-              : tErrors("generic");
+          !data.success && data.code === "AI_CONFIGURATION_ERROR"
+            ? tErrors("notConfigured")
+            : !data.success && data.message === "AI request failed"
+              ? tErrors("aiRequestFailed")
+              : !data.success && data.message === "Invalid AI response format"
+                ? tErrors("parseFailed")
+                : tErrors("generic");
         setError(message);
         return;
       }

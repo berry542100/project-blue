@@ -59,7 +59,8 @@
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "parseFailed": "Unable to read the analysis response. Please try again.",
-    "aiRequestFailed": "AI request failed"
+    "aiRequestFailed": "AI request failed",
+    "notConfigured": "AI service is not configured on the server."
   },
   "models": {
     "selectorLabel": "AI model",

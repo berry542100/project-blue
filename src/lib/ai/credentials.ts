@@ -3,6 +3,7 @@ import {
   getProviderDefaultBaseUrl,
   type ModelId,
 } from "@/config/models";
+import { AIConfigurationError } from "./errors";
 import type { ProviderCredentials } from "./types";
 
 function readEnv(name: string): string | undefined {
@@ -38,10 +39,14 @@ export function assertModelCredentials(
   const model = getModelDefinition(modelId);
 
   if (!credentials.baseUrl && model.provider === "openai-compatible") {
-    throw new Error(`Missing base URL for model ${modelId}`);
+    throw new AIConfigurationError(
+      `Missing base URL for model ${modelId}. Set one of: ${model.baseUrlEnvVars.join(", ")}`,
+    );
   }
 
   if (!credentials.apiKey) {
-    throw new Error(`Missing API key for model ${modelId}`);
+    throw new AIConfigurationError(
+      `Missing API key for model ${modelId}. Set one of: ${model.apiKeyEnvVars.join(", ")}`,
+    );
   }
 }

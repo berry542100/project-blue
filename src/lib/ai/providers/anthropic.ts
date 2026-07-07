@@ -1,8 +1,11 @@
+import { AIUpstreamError, readResponseErrorBody } from "../errors";
 import type { AIProvider, ChatMessage, ProviderCredentials } from "../types";
 
 type AnthropicResponse = {
   content: Array<{ type: string; text?: string }>;
 };
+
+const PROVIDER_NAME = "anthropic";
 
 export const anthropicProvider: AIProvider = {
   async complete(
@@ -13,8 +16,9 @@ export const anthropicProvider: AIProvider = {
     const baseUrl = credentials.baseUrl ?? "https://api.anthropic.com/v1";
     const systemMessage = messages.find((message) => message.role === "system");
     const conversation = messages.filter((message) => message.role !== "system");
+    const url = `${baseUrl}/messages`;
 
-    const response = await fetch(`${baseUrl}/messages`, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +37,13 @@ export const anthropicProvider: AIProvider = {
     });
 
     if (!response.ok) {
-      throw new Error("AI request failed");
+      const responseBody = await readResponseErrorBody(response);
+      throw new AIUpstreamError(
+        `Upstream ${PROVIDER_NAME} request failed with status ${response.status}`,
+        PROVIDER_NAME,
+        response.status,
+        responseBody,
+      );
     }
 
     const data = (await response.json()) as AnthropicResponse;

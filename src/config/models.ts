@@ -1,3 +1,5 @@
+import { AIConfigurationError } from "@/lib/ai/errors";
+
 export const MODEL_COOKIE_NAME = "PB_MODEL";
 
 export const PROVIDER_IDS = [
@@ -123,5 +125,7 @@ export function getApiModelId(modelId: ModelId): string {
     return process.env.AI_MODEL;
   }
 
-  throw new Error(`API model not configured for ${modelId}`);
+  throw new AIConfigurationError(
+    `API model not configured for ${modelId}. Set ${model.apiModelEnvVar} or AI_MODEL`,
+  );
 }

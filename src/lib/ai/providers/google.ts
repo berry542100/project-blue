@@ -1,3 +1,4 @@
+import { AIUpstreamError, readResponseErrorBody } from "../errors";
 import type { AIProvider, ChatMessage, ProviderCredentials } from "../types";
 
 type GeminiResponse = {
@@ -7,6 +8,8 @@ type GeminiResponse = {
     };
   }>;
 };
+
+const PROVIDER_NAME = "google";
 
 function toGeminiContents(messages: ChatMessage[]) {
   return messages
@@ -45,7 +48,13 @@ export const googleProvider: AIProvider = {
     });
 
     if (!response.ok) {
-      throw new Error("AI request failed");
+      const responseBody = await readResponseErrorBody(response);
+      throw new AIUpstreamError(
+        `Upstream ${PROVIDER_NAME} request failed with status ${response.status}`,
+        PROVIDER_NAME,
+        response.status,
+        responseBody,
+      );
     }
 
     const data = (await response.json()) as GeminiResponse;
