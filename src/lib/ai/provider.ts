@@ -1,30 +1,23 @@
-import {
-  getApiModelId,
-  getModelDefinition,
-  type ModelId,
-} from "@/config/models";
+import { getApiModelId } from "@/config/models";
 import {
   assertModelCredentials,
   getModelCredentials,
 } from "./credentials";
-import { getProviderImplementation } from "./registry";
+import { openAICompatibleProvider } from "./providers/openai-compatible";
 import { DECISION_SYSTEM_PROMPT } from "./system-prompt";
 import type { ChatMessage } from "./types";
 
-export async function callAI(userInput: string, modelId: ModelId) {
-  const model = getModelDefinition(modelId);
-  const credentials = getModelCredentials(modelId);
-  assertModelCredentials(modelId, credentials);
+export async function callAI(userInput: string) {
+  const credentials = getModelCredentials();
+  assertModelCredentials(credentials);
 
-  const apiModelId = getApiModelId(modelId);
-  const provider = getProviderImplementation(model.provider);
+  const apiModelId = getApiModelId();
 
   console.info(
     "[ProjectBlue AI]",
     JSON.stringify({
       event: "call_ai_start",
-      modelId,
-      provider: model.provider,
+      model: "qwen",
       apiModelId,
       baseUrl: credentials.baseUrl,
       hasApiKey: Boolean(credentials.apiKey),
@@ -36,5 +29,5 @@ export async function callAI(userInput: string, modelId: ModelId) {
     { role: "user", content: userInput },
   ];
 
-  return provider.complete(messages, apiModelId, credentials);
+  return openAICompatibleProvider.complete(messages, apiModelId, credentials);
 }

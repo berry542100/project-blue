@@ -61,13 +61,5 @@
     "parseFailed": "无法读取分析结果，请重试。",
     "aiRequestFailed": "AI 请求失败",
     "notConfigured": "服务端未配置 AI 环境变量，请联系管理员。"
-  },
-  "models": {
-    "selectorLabel": "AI 模型",
-    "deepseekV3": "DeepSeek V3",
-    "gpt5": "GPT-5",
-    "claudeSonnet": "Claude Sonnet",
-    "gemini": "Gemini",
-    "qwen": "Qwen"
   }
 }
