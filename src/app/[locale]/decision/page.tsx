@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/site-header";
+import { getSelectedModelId } from "@/lib/model-cookie-client";
 
 type DecisionResult = {
   summary: string;
@@ -204,6 +205,7 @@ export default function DecisionPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           input: trimmed,
+          model: getSelectedModelId(),
         }),
       });
 

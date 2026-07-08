@@ -61,5 +61,11 @@
     "parseFailed": "Unable to read the analysis response. Please try again.",
     "aiRequestFailed": "AI request failed",
     "notConfigured": "AI service is not configured on the server."
+  },
+  "models": {
+    "selectorLabel": "AI model",
+    "deepseekV3": "DeepSeek V3",
+    "deepseekR1": "DeepSeek R1",
+    "qwen": "Qwen"
   }
 }

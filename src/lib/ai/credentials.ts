@@ -1,16 +1,16 @@
 import {
-  getApiKeyEnvVarNames,
-  getBaseUrlEnvVarNames,
-  getModelApiKey,
-  getModelBaseUrl,
+  getSharedApiKey,
+  getSharedBaseUrl,
+  SHARED_API_KEY_ENV_VARS,
+  SHARED_BASE_URL_ENV_VARS,
 } from "@/config/models";
 import { AIConfigurationError } from "./errors";
 import type { ProviderCredentials } from "./types";
 
 export function getModelCredentials(): ProviderCredentials {
   return {
-    baseUrl: getModelBaseUrl(),
-    apiKey: getModelApiKey(),
+    baseUrl: getSharedBaseUrl(),
+    apiKey: getSharedApiKey(),
   };
 }
 
@@ -19,13 +19,13 @@ export function assertModelCredentials(
 ): asserts credentials is Required<ProviderCredentials> {
   if (!credentials.baseUrl) {
     throw new AIConfigurationError(
-      `Missing base URL for Qwen. Set one of: ${getBaseUrlEnvVarNames()}`,
+      `Missing API base URL. Set ${SHARED_BASE_URL_ENV_VARS.join(", ")}`,
     );
   }
 
   if (!credentials.apiKey) {
     throw new AIConfigurationError(
-      `Missing API key for Qwen. Set one of: ${getApiKeyEnvVarNames()}`,
+      `Missing API key. Set ${SHARED_API_KEY_ENV_VARS.join(", ")}`,
     );
   }
 }

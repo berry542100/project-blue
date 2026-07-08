@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import {
+  MODEL_COOKIE_NAME,
+  resolveModelId,
+  type ModelId,
+} from "@/config/models";
 import {
   AIConfigurationError,
   AIUpstreamError,
@@ -6,12 +12,14 @@ import {
 } from "@/lib/ai/errors";
 import { callAI } from "@/lib/ai/provider";
 import { parseAIDecisionResult } from "@/lib/ai/parse-response";
+import { MODEL_COOKIE_MAX_AGE } from "@/lib/model-cookie";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 type DecisionRequestBody = {
   input?: string;
+  model?: string;
 };
 
 type ErrorResponse = {
@@ -20,6 +28,13 @@ type ErrorResponse = {
   code?: string;
   detail?: string;
 };
+
+function resolveRequestModel(
+  bodyModel: string | undefined,
+  cookieModel: string | undefined,
+): ModelId {
+  return resolveModelId(bodyModel ?? cookieModel);
+}
 
 function buildErrorResponse(
   message: string,
@@ -39,6 +54,8 @@ function buildErrorResponse(
 }
 
 export async function POST(req: Request) {
+  let modelId: ModelId | undefined;
+
   try {
     const body = (await req.json()) as DecisionRequestBody;
     const input = body.input?.trim();
@@ -47,33 +64,46 @@ export async function POST(req: Request) {
       return buildErrorResponse("Input is required", 400, "INPUT_REQUIRED");
     }
 
+    const cookieStore = await cookies();
+    const cookieModel = cookieStore.get(MODEL_COOKIE_NAME)?.value;
+    modelId = resolveRequestModel(body.model, cookieModel);
+
     console.info(
       "[ProjectBlue AI]",
       JSON.stringify({
         event: "decision_request_start",
-        model: "qwen",
+        modelId,
         inputLength: input.length,
       }),
     );
 
-    const rawResult = await callAI(input);
+    const rawResult = await callAI(input, modelId);
     const result = parseAIDecisionResult(rawResult);
 
     console.info(
       "[ProjectBlue AI]",
       JSON.stringify({
         event: "decision_request_success",
-        model: "qwen",
+        modelId,
         resultFields: Object.keys(result),
       }),
     );
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       result,
+      model: modelId,
     });
+
+    response.cookies.set(MODEL_COOKIE_NAME, modelId, {
+      path: "/",
+      maxAge: MODEL_COOKIE_MAX_AGE,
+      sameSite: "lax",
+    });
+
+    return response;
   } catch (error) {
-    logAIError("api/decision", error, { model: "qwen" });
+    logAIError("api/decision", error, { modelId });
 
     if (error instanceof AIConfigurationError) {
       return buildErrorResponse(

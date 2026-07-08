@@ -2,6 +2,7 @@
 
 import { BrandMark } from "@/components/brand-mark";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ModelSelector } from "@/components/model-selector";
 import { Link } from "@/i18n/navigation";
 
 type SiteHeaderProps = {
@@ -20,6 +21,7 @@ export function SiteHeader({ showHomeLink = false }: SiteHeaderProps) {
           <BrandMark logoSize={24} textClassName="text-sm" />
         )}
         <div className="flex items-center gap-3">
+          <ModelSelector />
           <LanguageSwitcher />
         </div>
       </div>
